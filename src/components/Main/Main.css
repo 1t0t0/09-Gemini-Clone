@@ -1,170 +1,203 @@
-.main {
-    flex: 1;
+.main{
+    flex:1;
     min-height: 100vh;
     padding-bottom: 15vh;
     position: relative;
 }
-.main .nav {
+
+.main .nav{
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 22px;
     padding: 20px;
-    color: #585858;
+    color:#585858;
 }
+
 .main .nav img{
-    width: 40px;
-    border-radius: 50%;
+    width:40px;
+    border-radius:50%;
 }
-.main-container {
+.main-container{
     max-width: 900px;
     margin: auto;
 }
-.greet {
-    margin: 50px 0px;
+.main .greet{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 30vh;
+    margin-top: 30vh;
     font-size: 56px;
-    color: #c4c7c5;
-    font-weight: 500;
-    padding: 20px;
 }
-.greet span {
-    background: -webkit-linear-gradient(16deg, #4b90ff, #ff5546);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.main .greet span{
+   background: -webkit-linear-gradient(16deg,#4b90ff,#ff5546);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color:transparent;
 }
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
-    gap: 15px;
-    padding: 20px;
-}
-.card {
-    height: 200px;
-    padding: 15px;
-    background-color: #f0f4f9;
-    border-radius: 10px;
-    position: relative;
-    cursor: pointer;
-}
-.card:hover {
-    background-color: #dfe4ea;
-}
-.card p {
-    color: #585858;
-    font-size: 17px;
-}
-.card img {
-    width: 35px;
-    padding: 5px;
+.main-bottom{
     position: absolute;
-    background-color: white;
-    border-radius: 20px;
-    bottom: 10px;
-    right: 10px;
-}
-.main-bottom {
-    position: absolute;
-    bottom: 0;
+    bottom:0;
     width: 100%;
     max-width: 900px;
-    padding: 0 20px;
-    margin: auto;
+    padding: 0px 20px;
+    margin-bottom: 50px;
+    /* border: #4b90ff solid 1px; */
 }
-.search-box {
+
+.search-box{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap:20px;
     background-color: #f0f4f9;
     padding: 10px 20px;
     border-radius: 50px;
 }
-.search-box input {
-    flex: 1;
+.search-box img{
+    width:24px;
+    cursor: pointer;
+}
+.search-box input{
+    flex:1;
     background: transparent;
     border: none;
     outline: none;
     padding: 8px;
     font-size: 18px;
 }
-.search-box div {
-    display: flex;
-    gap: 15px;
-}
-
-.search-box img {
-    width: 24px;
-    cursor: pointer;
-}
-.bottom-info {
-    font-size: 13px;
-    margin: 15px auto;
-    text-align: center;
-    font-weight: 300;
-}
-.result {
-    padding: 0% 5%;
-    max-height: 70vh;
-    overflow-y: scroll;
-}
-.result::-webkit-scrollbar{
-    display:none;
-}
-.result-title {
-    margin: 40px 0px;
+.search-box div{
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap:20px;
+    /* border: #4b90ff solid 1px; */
+    width: 100%;
 }
-.result img {
-    width: 40px;
+
+.result{
+    padding:0px 5%;
+    max-height: 70vh;
+    overflow: scroll;
+}
+.result::-webkit-scrollbar{
+    display: none;
+}
+.result-title{
+     margin:40px 0px;
+     display: flex;
+     align-items: center;
+     gap:20px;
+}
+.result-title img{
+    width: 30px;
     border-radius: 50%;
 }
-.result-data {
+.result-data{
+    margin:40px 0px;
     display: flex;
     align-items: start;
-    gap: 20px;
+    gap:20px;
 }
-.loader {
+.result-data img{
+    width: 30px;
+    border-radius: 50%;
+}
+
+.result-data .spin-img {
+    animation: spin 2s linear infinite;
+}
+@keyframes spin {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+.loader{
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.animated-bg {
-    border-radius: 4px;
+.loader hr:nth-child(1){
     border: none;
-    animation: loader 3s infinite linear;
-    background-color: #f6f7f8;
-    background: linear-gradient(to right, #9ed7ff, #ffffff, #9ed7ff);
-    background-size: 800px 50px;
-    height: 20px;
+    height: 1.25rem;
+    animation: expanding 0.4s 0.7s forwards linear, moving 1s 1s infinite forwards linear;
+    transform-origin: left; /* Without this, you'll notice the `expanding` animation starts expanding from the  middle instead of shooting out from the left */
+    border-radius: 0.125rem;
+    background-image: linear-gradient(to right, #eff6ff 30%, #2563eb60 60%, #eff6ff);
+    background-size: 200% auto;
+    opacity: 0; /* The `expanding` animation will fade in the loading bar */
+    animation-delay: 100ms;
 }
-@keyframes loader {
+.loader hr:nth-child(2){
+    border: none;
+    height: 1.25rem;
+    animation: expanding 0.4s 0.7s forwards linear, moving 1s 1s infinite forwards linear;
+    transform-origin: left; /* Without this, you'll notice the `expanding` animation starts expanding from the  middle instead of shooting out from the left */
+    border-radius: 0.125rem;
+    background-image: linear-gradient(to right, #eff6ff 30%, #2563eb60 60%, #eff6ff);
+    background-size: 200% auto;
+    opacity: 0; /* The `expanding` animation will fade in the loading bar */
+    animation-delay: 300ms;
+}
+.loader hr:nth-child(3){
+    border: none;
+    height: 1.25rem;
+    animation: expanding 0.4s 0.7s forwards linear, moving 1s 1s infinite forwards linear;
+    transform-origin: left; /* Without this, you'll notice the `expanding` animation starts expanding from the  middle instead of shooting out from the left */
+    border-radius: 0.125rem;
+    background-image: linear-gradient(to right, #eff6ff 30%, #2563eb60 60%, #eff6ff);
+    background-size: 200% auto;
+    opacity: 0; /* The `expanding` animation will fade in the loading bar */
+    animation-delay: 500ms;
+}
+
+/* This keyframe will create the initial slide animation  */
+
+@keyframes expanding {
     0% {
-        background-position: -800px 0
+        transform: scaleX(0);
+        opacity: 0;
     }
     100% {
-        background-position: 800px 0
+        transform: scaleX(1);
+        opacity: 1;
     }
 }
-.result-data p{
+ 
+/* This keyframe will create the loading gradient effect */
+@keyframes moving {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+ 
+
+.result-data p {
     font-size: 17px;
     font-weight: 300;
     line-height: 1.8;
 }
-@media (max-width:600px) {
+@media (max-width:600px){
     .main-bottom input{
-        flex: none;
-        width: 140px;
+        flex:none;
+        width: 150px;
     }
     .main-bottom img{
-        width: 20px;
+        width:20px;
     }
-    .search-box{
-        padding: 5px 10px;
-    }
-    .search-box div{
-        gap: 5px;
-    }
+    
+}
+
+.search-box img:nth-child(2){
+    animation: fadeIn 1.5s;
+}
+.search-box img:nth-child(3){
+    animation: fadeIn 1.5s;
 }

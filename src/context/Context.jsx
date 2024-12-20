@@ -1,76 +1,87 @@
 import { createContext, useState } from "react";
-import runChat from "../config/gemini";
+import run from "../config/gemini";
 
 export const Context = createContext();
 
 const ContextProvider = (props) => {
 
-    const [prevPrompts, setPrevPrompts] = useState([]);
-    const [input, setInput] = useState("");
-    const [recentPrompt, setRecentPrompt] = useState("");
+    const [input, setInput] = useState("")
+    const [resentPrompt, setRecentPrompt] = useState("")
+    const [prevPrompt, setPrevPrompt] = useState([])
     const [showResult, setShowResult] = useState(false)
     const [loading, setLoading] = useState(false)
     const [resultData, setResultData] = useState("")
 
-
-    function delayPara(index, nextWord) {
+    const delayPara = (index, nextWord) => {
         setTimeout(function () {
             setResultData(prev => prev + nextWord)
-        }, 75 * index);
+        }, 75 * index)
+    }
+
+    const newChat = () => {
+        setLoading(false)
+        setShowResult(false)
+        setResultData("")
     }
 
     const onSent = async (prompt) => {
+        console.log("Input before setting resentPrompt:", input);
 
         setResultData("")
         setLoading(true)
         setShowResult(true)
         let response;
         if (prompt !== undefined) {
-            response = await runChat(prompt);
+            response = await run(prompt)
             setRecentPrompt(prompt)
-        }
-        else {
-            setPrevPrompts(prev => [...prev, input]);
+        } else {
+            setPrevPrompt(prev => [...prev, input])
             setRecentPrompt(input)
-            response = await runChat(input);
+            response = await run(input)
         }
-        let responseArray = response.split('**');
-        let newArray = "";
+
+        let responseArray = response.split("**")
+        let newResponse = "";
         for (let i = 0; i < responseArray.length; i++) {
             if (i === 0 || i % 2 !== 1) {
-                newArray += responseArray[i]
-            }
-            else {
-                newArray += "<b>" + responseArray[i] + "</b>"
+                newResponse += responseArray[i];
+            } else {
+                newResponse += "<li style='font-weight: 350;'>" + responseArray[i] + "</li>";
             }
         }
-        console.log(newArray);
-        responseArray = newArray.split('*').join("</br>").split(" ");
-        for (let i = 0; i < responseArray.length; i++) {
-            const nextWord = responseArray[i];
+        let newResponse2 = newResponse.split("*").join("</br>")
+
+        // Fix duplicate text issue
+        setResultData("") // Ensure resultData is reset before appending new content
+        let newResponseArray = newResponse2.split(" ")
+        for (let i = 0; i < newResponseArray.length; i++) {
+            const nextWord = newResponseArray[i]
             delayPara(i, nextWord + " ")
         }
-        setLoading(false);
+
+        setLoading(false)
         setInput("")
     }
 
-    const newChat = async () => {
-        setLoading(false);
-        setShowResult(false);
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            onSent();
+        }
     }
 
     const contextValue = {
-        prevPrompts,
-        setPrevPrompts,
-        onSent,
+        prevPrompt,
+        setPrevPrompt,
         setRecentPrompt,
-        recentPrompt,
+        resentPrompt,
+        onSent,
         showResult,
         loading,
         resultData,
         input,
         setInput,
-        newChat
+        newChat,
+        handleKeyDown
     }
 
     return (
@@ -80,4 +91,4 @@ const ContextProvider = (props) => {
     )
 }
 
-export default ContextProvider
+export default ContextProvider;
